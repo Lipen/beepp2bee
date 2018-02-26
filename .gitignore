@@ -2,3 +2,5 @@ gen/
 out/
 
 *.bee
+
+pl-satsolver.so
