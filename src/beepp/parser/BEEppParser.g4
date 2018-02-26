@@ -44,10 +44,12 @@ range returns [int a, int b]
 
 boolExpr returns [BooleanExpression expr] locals [String op]
     :   boolPrimary { $expr = $boolPrimary.expr; }
-    |   ('AMO' { $op = "AMO"; }) '(' INT_CONST ',' boolExprList? ')'
+    |   'AMO' '(' INT_CONST ',' boolExprList ')'
         { $expr = new AtMostOperation($INT_CONST.int, $boolExprList.list); }
-    |   ('ALO' { $op = "ALO"; }) '(' INT_CONST ',' boolExprList? ')'
+    |   'ALO' '(' INT_CONST ',' boolExprList ')'
         { $expr = new AtLeastOperation($INT_CONST.int, $boolExprList.list); }
+    |   'EX' '(' INT_CONST ',' boolExprList ')'
+        { $expr = new ExactlyOperation($INT_CONST.int, $boolExprList.list); }
     |   i1=intExpr
         (  '<=' { $op = "leq"; }
         |  '>=' { $op = "geq"; }
@@ -85,6 +87,8 @@ boolExprList returns [List<BooleanExpression> list]
 intExpr returns [IntegerExpression expr] locals [String op]
     :   intPrimary { $expr = $intPrimary.expr; }
     // |   ('min' {$op = "min";} | 'max' {$op = "max";}) '(' intExprList? ')' TODO implement
+    |   'SUM' '(' boolExprList ')'
+        { $expr = new SumOperation($boolExprList.list); }
     |   e1=intExpr
         (   '*' { $op = "times"; }
         |   '/' { $op = "div";   }

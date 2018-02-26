@@ -13,6 +13,7 @@ MOD:        '%';
 MIN:        'min';
 MAX:        'max';
 MINUS:      '-';
+SUM:        'SUM';
 
 // Integer to boolean operations
 LESS:       '<';
@@ -31,6 +32,7 @@ IFF:        '<=>';
 ARROW:      '->';
 ALO:        'ALO';
 AMO:        'AMO';
+EX:         'EX';
 
 // Boolean operations: alternative notation
 ALT_OR:     'or' -> type(OR);
